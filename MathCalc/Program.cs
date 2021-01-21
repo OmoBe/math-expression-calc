@@ -33,22 +33,20 @@ namespace MathCalc
         private static Token GetToken()
         {
             Token t = null;
-            StringBuilder Elem = null;
+            string numbers = null;
 
             if (sb.Length > 0)
             {
                 if (char.IsDigit(sb[0]))
                 {
                     //Get the full number from the input
-                    var numbers = new string(sb.ToString()
+                    numbers = new string(sb.ToString()
                         .TakeWhile(c => char.IsDigit(c))
                         .ToArray());
 
-                    Elem = new StringBuilder(numbers);
-
                     //Remove this number from the input string
-                    sb.Remove(0, Elem.Length); 
-                    return new Token('8', double.Parse(Elem.ToString()));
+                    sb.Remove(0, numbers.Length); 
+                    return new Token('8', double.Parse(numbers));
                 }
 
                 t = new Token(sb[0]);
