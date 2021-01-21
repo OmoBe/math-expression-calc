@@ -35,6 +35,7 @@ namespace MathCalc
             Token t = null;
             string numbers = null;
 
+            //sb.Length == 0
             if (sb.Length < 1)
                 return new Token(';');
 
