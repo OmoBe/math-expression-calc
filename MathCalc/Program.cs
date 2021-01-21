@@ -35,26 +35,24 @@ namespace MathCalc
             Token t = null;
             string numbers = null;
 
-            if (sb.Length > 0)
+            if (sb.Length < 1)
+                return new Token(';');
+
+            if (char.IsDigit(sb[0]))
             {
-                if (char.IsDigit(sb[0]))
-                {
-                    //Get the full number from the input
-                    numbers = new string(sb.ToString()
-                        .TakeWhile(c => char.IsDigit(c))
-                        .ToArray());
+                //Get the full number from the input
+                numbers = new string(sb.ToString()
+                    .TakeWhile(c => char.IsDigit(c))
+                    .ToArray());
 
-                    //Remove this number from the input string
-                    sb.Remove(0, numbers.Length); 
-                    return new Token('8', double.Parse(numbers));
-                }
-
-                t = new Token(sb[0]);
-                sb.Remove(0, 1);
-                return t;
+                //Remove this number from the input string
+                sb.Remove(0, numbers.Length);
+                return new Token('8', double.Parse(numbers));
             }
 
-            return new Token(';');
+            t = new Token(sb[0]);
+            sb.Remove(0, 1);
+            return t;            
         }
 
         private static void PutTokenBack(char Symbol)
