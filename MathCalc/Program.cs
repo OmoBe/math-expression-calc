@@ -35,7 +35,6 @@ namespace MathCalc
             Token t = null;
             string numbers = null;
 
-            //sb.Length == 0
             if (sb.Length < 1)
                 return new Token(';');
 
@@ -85,22 +84,25 @@ namespace MathCalc
             double left = Multiply();      // read and evaluate a Term
             Token t = GetToken();        // get the next token from token stream
 
-            while (true)
+            while (!t.Symbol.Equals(';'))
             {
                 switch (t.Symbol)
                 {
                     case '+':
                         left += Multiply();    // evaluate Term and add; Perform all multiplications first
+                        t = GetToken();
                         break;
                     case '-':
                         left -= Multiply();    // evaluate Term and subtract
+                        t = GetToken();
                         break;
                     default:
                         PutTokenBack(t.Symbol);      // put t back into the expression input string
                         return left;       // finally: no more + or -: return the answer
                 }
-                return left;
             }
+
+            return left;
         }
 
         private static double Multiply()
@@ -108,19 +110,20 @@ namespace MathCalc
             double left = Element();
             Token t = GetToken();        // get the next token from token stream
 
-            while (true)
+            while (!t.Symbol.Equals(';'))
             {
                 switch (t.Symbol)
                 {
                     case '*':
                         left *= Element();
+                        t = GetToken();
                         break;
                     default:
                         PutTokenBack(t.Symbol);     // put t back into the input string
                         return left;
                 }
-                return left;
             }
+            return left;
         }
 
     }
